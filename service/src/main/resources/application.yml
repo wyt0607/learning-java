@@ -29,6 +29,15 @@ spring:
       ddl-auto: update
     properties:
       dialect: org.hibernate.dialect.MySQL5Dialect
+  redis:
+    host: localhost
+    port: 6379
+    pool:
+      max-active: 8
+      max-wait: -1
+      max-idle: 8
+      min-idle: 0
+      timeout: 0
 eureka:
   client:
     serviceUrl:

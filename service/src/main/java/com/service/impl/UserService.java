@@ -6,6 +6,7 @@ import com.service.IUserService;
 import com.util.CommonUtil;
 import com.util.JWTUtil;
 import org.json.JSONObject;
+import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -19,7 +20,7 @@ import java.util.UUID;
 @Service
 public class UserService implements IUserService {
 
-    private org.slf4j.Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger= LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User findById(Integer id) {
@@ -30,7 +31,7 @@ public class UserService implements IUserService {
     private IUserDao userDao;
 
     @Override
-    public String register(User user) {
+    public String save(User user) {
 
         User result = userDao.findByUsername(user.getUsername());
         if (result == null) {
@@ -40,7 +41,6 @@ public class UserService implements IUserService {
         return "fail";
     }
 
-    @Override
     public String login(User user) {
         User result = userDao.findByUsername(user.getUsername());
         if (CommonUtil.isEmpty(result)) {

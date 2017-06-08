@@ -9,9 +9,5 @@ public interface IUserService {
 
     User findById(Integer id);
 
-    String register(User user);
-
-    String login(User user);
-
-
+    String save(User user);
 }

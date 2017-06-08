@@ -27,17 +27,9 @@ public class RegisterController {
     @ResponseBody
     public String test(String username, String password) {
         User user = new User(username, password);
-        System.out.println(1111);
-        return userService.register(user);
+        return userService.save(user);
 
     }
 
-    @RequestMapping(value = "/test1")
-    @ResponseBody
-    public String test1(String username, String password) {
-        System.out.println(555);
-        User user = new User(username, password);
-        String result = userService.login(user);
-        return result != null ? "success:"+result : "fail";/**/
-    }
+
 }
