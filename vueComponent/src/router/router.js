@@ -4,12 +4,13 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import app from "../App.vue";
+import myViews from "../views/index.js";
 Vue.use(VueRouter);
 
 
 export  default  new VueRouter({
     mode: 'history',
-    base:"/",
+    base: "/",
     scrollBehavior (to, from, savedPosition) {
         if (savedPosition) {
             return savedPosition
@@ -18,6 +19,7 @@ export  default  new VueRouter({
         }
     },
     routes: [
-        {path: "*", component: app}
+        {path:'/home',component:myViews.home},
+        {path: "*", redirect:'/home'}
     ]
 });
