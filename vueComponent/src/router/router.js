@@ -20,6 +20,7 @@ export  default  new VueRouter({
     },
     routes: [
         {path:'/home',component:myViews.home},
+        {path:'/test',component:myViews.test},
         {path: "*", redirect:'/home'}
     ]
 });

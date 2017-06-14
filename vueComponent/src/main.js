@@ -4,6 +4,7 @@ import router from "./router/router";
 import store from "./store/store";
 import {sync} from "vuex-router-sync";
 import "./assets/index";
+import "./directives/index"
 
 sync(store, router)
 

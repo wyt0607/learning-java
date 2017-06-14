@@ -11,7 +11,11 @@
         </div>
     </div>
 </template>
-<style lang="sass" rel="stylesheet/scss" scoped></style>
+<style lang="scss" rel="stylesheet/scss" scoped>
+    div{
+        margin: 5px;
+    }
+</style>
 <script>
     export default{
         data(){
