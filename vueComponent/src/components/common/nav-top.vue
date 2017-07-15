@@ -1,6 +1,8 @@
 <template>
     <div id="navTop">
-        <div></div>
+        <div>
+            111222333
+        </div>
     </div>
 </template>
 <style lang="sass" rel="stylesheet/scss" scoped></style>

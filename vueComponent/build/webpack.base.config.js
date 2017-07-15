@@ -1,35 +1,27 @@
 const path = require('path')
-const ExtractTextPlugin = require("extract-text-webpack-plugin");
+const webpack = require('webpack')
+const vueConfig = require('./vue-loader.config')
+const ExtractTextPlugin = require('extract-text-webpack-plugin')
+const FriendlyErrorsPlugin = require('friendly-errors-webpack-plugin')
+
 const isProd = process.env.NODE_ENV === 'production'
 
-
-const config = {
-    devtool: '#source-map',
-    entry: {
-        index: './src/client-entry.js',
-        index2: ['vue', 'vue-router', 'vuex', 'whatwg-fetch', "es6-promise"]
-    },
+module.exports = {
+    devtool: isProd
+        ? false
+        : '#cheap-module-source-map',
     output: {
         path: path.resolve(__dirname, '../dist'),
         publicPath: '/dist/',
-        filename: 'client/client-bundle.js'
+        filename: '[name].[chunkhash].js'
     },
     module: {
         noParse: /es6-promise\.js$/, // avoid webpack shimming process
         rules: [
             {
-                test: /\.css$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader!postcss-loader"
-                })
-            },
-            {
-                test: /\.scss$/,
-                loader: ExtractTextPlugin.extract({
-                    fallback: "style-loader",
-                    use: "css-loader!postcss-loader!sass-loader"
-                })
+                test: /\.vue$/,
+                loader: 'vue-loader',
+                options: vueConfig
             },
             {
                 test: /\.js$/,
@@ -37,60 +29,47 @@ const config = {
                 exclude: /node_modules/
             },
             {
-                test: /\.(png|jpg|gif|jpeg)$/,
+                test: /\.(png|jpg|gif|svg)$/,
                 loader: 'url-loader',
-                query: {
+                options: {
                     limit: 10000,
-                    name: 'images/[name].[ext]?[hash]'
+                    name: '[name].[ext]?[hash]'
                 }
             },
             {
-                test: /\.(eot|svg|ttf|woff|woff2|otf)$/,
-                loader: 'url-loader',
-                query: {
-                    limit: 10000,
-                    name: 'fonts/[name].[ext]?[hash]'
-                }
+                test: /\.css$/,
+                use: isProd
+                    ? ExtractTextPlugin.extract({
+                        use: 'css-loader?minimize',
+                        fallback: 'vue-style-loader'
+                    })
+                    : ['vue-style-loader', 'css-loader', 'postcss-loader']
+            },
+            {
+                test: /\.scss$/,
+                use: isProd
+                    ? ExtractTextPlugin.extract({
+                        use: 'css-loader?minimize',
+                        fallback: 'vue-style-loader'
+                    })
+                    : ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
             }
         ]
     },
-    plugins: [
-        new ExtractTextPlugin("css/style.css")
-    ],
-    resolve: {
-        alias: {
-            'vue$': 'vue/dist/vue.common.js'
-        }
-    },
     performance: {
-        hints: process.env.NODE_ENV === 'production' ? 'warning' : false
+        maxEntrypointSize: 300000,
+        hints: isProd ? 'warning' : false
     },
-    devServer: {
-        historyApiFallback: true,
-        noInfo: true
-    },
+    plugins: isProd
+        ? [
+            new webpack.optimize.UglifyJsPlugin({
+                compress: {warnings: false}
+            }),
+            new ExtractTextPlugin({
+                filename: 'common.[chunkhash].css'
+            })
+        ]
+        : [
+            new FriendlyErrorsPlugin()
+        ]
 }
-
-
-if (isProd) {
-    config.module.rules.push({
-        test: /\.vue$/,
-        loader: 'vue-loader',
-        options: {
-            preserveWhitespace: false,
-            loaders: {
-                sass: ExtractTextPlugin.extract({
-                    use: 'css-loader!postcss-loader!sass-loader',
-                    fallback: 'vue-style-loader'
-                })
-            }
-        }
-    })
-} else {
-    config.module.rules.push({
-        test: /\.vue$/,
-        loader: 'vue-loader'
-    })
-}
-
-module.exports = config

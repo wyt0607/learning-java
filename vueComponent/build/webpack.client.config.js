@@ -1,37 +1,69 @@
+const glob = require('glob')
 const webpack = require('webpack')
+const merge = require('webpack-merge')
 const base = require('./webpack.base.config')
-const HTMLPlugin = require('html-webpack-plugin')
+const SWPrecachePlugin = require('sw-precache-webpack-plugin')
+const {VueSSRClientPlugin} = require('vue-ssr-webpack-plugin')
 
-const config = Object.assign({}, base, {
-    plugins: (base.plugins || []).concat([
+const config = merge(base, {
+    entry: {
+        app: './src/entry-client.js'
+    },
+    plugins: [
+        // strip dev-only code in Vue source
+        new webpack.DefinePlugin({
+            'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV || 'development'),
+            'process.env.VUE_ENV': '"client"'
+        }),
         // extract vendor chunks for better caching
         new webpack.optimize.CommonsChunkPlugin({
-            name: 'index2',
-            filename: 'client/client-vendor-bundle.js'
+            name: 'vendor',
+            minChunks: function (module) {
+                // a module is extracted into the vendor chunk if...
+                return (
+                    // it's inside node_modules
+                    /node_modules/.test(module.context) &&
+                    // and not a CSS file (due to extract-text-webpack-plugin limitation)
+                    !/\.css$/.test(module.request)
+                )
+            }
         }),
-        // generate output HTML
-        new HTMLPlugin({
-            template: 'src/index.template.html'
-        })
-    ])
+        // extract webpack runtime & manifest to avoid vendor chunk hash changing
+        // on every build.
+        new webpack.optimize.CommonsChunkPlugin({
+            name: 'manifest'
+        }),
+        new VueSSRClientPlugin()
+    ]
 })
 
 if (process.env.NODE_ENV === 'production') {
     config.plugins.push(
-        new webpack.DefinePlugin({
-            'process.env': {
-                NODE_ENV: '"production"'
-            }
-        }),
-        // this is needed in webpack 2 for minifying CSS
-        new webpack.LoaderOptionsPlugin({
-            minimize: true
-        }),
-        // minify JS
-        new webpack.optimize.UglifyJsPlugin({
-            compress: {
-                warnings: false
-            }
+        // auto generate service worker
+        new SWPrecachePlugin({
+            cacheId: 'vue-hn',
+            filename: 'service-worker.js',
+            minify: true,
+            dontCacheBustUrlsMatching: /./,
+            staticFileGlobsIgnorePatterns: [/\.map$/, /\.json$/],
+            runtimeCaching: [
+                {
+                    urlPattern: '/',
+                    handler: 'networkFirst'
+                },
+                {
+                    urlPattern: /\/(top|new|show|ask|jobs)/,
+                    handler: 'networkFirst'
+                },
+                {
+                    urlPattern: '/item/:id',
+                    handler: 'networkFirst'
+                },
+                {
+                    urlPattern: '/user/:id',
+                    handler: 'networkFirst'
+                }
+            ]
         })
     )
 }
