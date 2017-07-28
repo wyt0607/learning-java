@@ -40,7 +40,7 @@ module.exports = {
                 test: /\.css$/,
                 use: isProd
                     ? ExtractTextPlugin.extract({
-                        use: 'css-loader?minimize',
+                        use: ['css-loader?minimize', 'postcss-loader'],
                         fallback: 'vue-style-loader'
                     })
                     : ['vue-style-loader', 'css-loader', 'postcss-loader']
@@ -49,7 +49,7 @@ module.exports = {
                 test: /\.scss$/,
                 use: isProd
                     ? ExtractTextPlugin.extract({
-                        use: 'css-loader?minimize',
+                        use: ['css-loader?minimize', 'postcss-loader', 'sass-loader'],
                         fallback: 'vue-style-loader'
                     })
                     : ['vue-style-loader', 'css-loader', 'postcss-loader', 'sass-loader']
