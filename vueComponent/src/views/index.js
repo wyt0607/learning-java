@@ -1,9 +1,8 @@
 /**
  * Created by WTON on 2016/10/15.
  */
-const home = resolve => require(['./home.vue'], resolve);
-const test = resolve => require(['./test.vue'], resolve);
-
+const home = () => import('./home.vue')
+const test = () => import('./test.vue')
 
 export default {
     home, test

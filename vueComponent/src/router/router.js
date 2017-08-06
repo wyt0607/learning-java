@@ -4,13 +4,15 @@
 import Vue from "vue";
 import VueRouter from "vue-router";
 import myViews from "../views/index.js";
-import app from '../App.vue'
+
+const app = () => import( '../App.vue');
+const temp = () => import( '../components/common/temp.vue');
 Vue.use(VueRouter);
 
 export function createRouter() {
     return new VueRouter({
         mode: 'history',
-        scrollBehavior (to, from, savedPosition) {
+        scrollBehavior(to, from, savedPosition) {
             if (savedPosition) {
                 return savedPosition
             } else {
@@ -18,8 +20,14 @@ export function createRouter() {
             }
         },
         routes: [
-            {path: '/home', component: myViews.home},
+            {
+                path: '/home', component: myViews.home,
+                children: [
+                    {path: "temp", component: temp}
+                ]
+            },
             {path: '/test', component: myViews.test},
+            {path: "/mdzz", component: temp},
             {path: "*", component: app}
         ]
     });

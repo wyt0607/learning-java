@@ -1,15 +1,28 @@
 <template>
-    <div id="home">
-        <register></register>
+    <div id="home" class="box">
+        <left></left>
+        <right>
+            <router-view></router-view>
+        </right>
     </div>
 </template>
-<style lang="sass" rel="stylesheet/scss"></style>
+<style lang="scss" rel="stylesheet/scss">
+    @import "../assets/scss/variables.scss";
+    .box {
+        display: flex;
+    }
+</style>
 <script>
-    import{register} from "../components/index.js"
-    export default{
-        data(){
+    import left from "../components/layout/left-layout.vue";
+    import right from "../components/layout/right-layout.vue";
+
+    export default {
+        data() {
             return {}
         },
-        components: {register}
+        components: {
+            left,
+            right
+        }
     }
 </script>

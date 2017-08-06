@@ -4,6 +4,6 @@
 /*
  按需加载例子
  */
-import register from "./service/register.vue"
-import wtonForm from "./common/wton-form.vue"
+const register = () => import("./service/register.vue")
+const wtonForm = () => import("./common/wton-form.vue")
 export {register, wtonForm}
