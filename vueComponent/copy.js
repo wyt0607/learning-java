@@ -4,4 +4,3 @@ console.log(mdzz)
 mdzz.forEach((e) => {
     fs.writeFileSync("./dist/" + e, fs.readFileSync("./src/assets/mdzz/" + e))
 })
-export {mdzz}
