@@ -23,7 +23,8 @@ export function createRouter() {
             {
                 path: '/home', component: myViews.home,
                 children: [
-                    {path: "temp", component: temp}
+                    {path: "temp", component: temp},
+                    {path: 'test', component: myViews.test}
                 ]
             },
             {path: '/test', component: myViews.test},

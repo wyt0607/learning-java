@@ -1,6 +1,6 @@
 <template>
     <div id="app">
-            <router-view></router-view>
+        <router-view></router-view>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss"></style>
@@ -10,7 +10,7 @@
             return {}
         },
         beforeRouteEnter(to, from, next) {
-            next("/mdzz")
+            next("/home/temp")
         }
     }
 </script>
