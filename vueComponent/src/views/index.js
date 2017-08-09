@@ -3,7 +3,8 @@
  */
 const home = () => import('./home.vue')
 const test = () => import('./test.vue')
+const chat = () => import('./chat.vue')
 
 export default {
-    home, test
+    home, test, chat
 }

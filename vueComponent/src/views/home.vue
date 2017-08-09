@@ -25,31 +25,28 @@
 
     .box {
         display: flex;
-        margin: 50px;
+         >div {
+            margin: 10px;
+        }
         .left {
             display: flex;
             width: $leftWidth;
             border: 1px solid;
-            padding: 50px;
+            align-items: center;
             flex-flow: column;
         }
         .right {
             display: flex;
             width: $rightWidth;
-            border: solid 1px;
-            padding: 50px;
         }
     }
 
-
-
     .head {
         display: flex;
-        width: 200px;
-        height: 200px;
+        margin-top: 50px;
         .head-img {
-            width: 100%;
-            height: 100%;
+            width: 200px;
+            height: 200px;
             object-fit: cover;
             border-radius: 100px;
         }
@@ -85,7 +82,8 @@
             return {
                 links: [
                     "/home/temp",
-                    "/home/test"
+                    "/home/test",
+                    "/home/chat"
                 ]
             }
         },
