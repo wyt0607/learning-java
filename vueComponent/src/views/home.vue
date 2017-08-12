@@ -25,7 +25,7 @@
 
     .box {
         display: flex;
-         >div {
+        > div {
             margin: 10px;
         }
         .left {
