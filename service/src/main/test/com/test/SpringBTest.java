@@ -17,6 +17,7 @@ import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Map;
+import java.util.UUID;
 
 /**
  * Created by WTON on 2017/5/21.
@@ -53,4 +54,5 @@ public class SpringBTest {
         stringRedisTemplate.opsForValue().set("bbb", "123123");
         Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
     }
+
 }

@@ -23,7 +23,7 @@ spring:
     useGlobalDataSourceStat: true
   jpa:
     database: mysql
-    show-sql: false
+    show-sql: true
     generate-ddl: true
     hibernate:
       ddl-auto: update
@@ -49,5 +49,6 @@ server:
   port: 8081
 logging:
   file: spirngboot.log
-  level: info
+  level: debug
+
 

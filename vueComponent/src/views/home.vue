@@ -2,7 +2,7 @@
     <div id="home" class="box">
         <div class="left">
             <div class="head">
-                <img class="head-img" src="../../dist/mdzz16.jpg" alt="mdzz">
+                <img class="head-img" src="../assets/mdzz/mdzz16.jpg" alt="mdzz">
             </div>
 
             <div class="middle">
@@ -25,19 +25,19 @@
 
     .box {
         display: flex;
+        margin: 0px 50px;
         > div {
             margin: 10px;
         }
         .left {
             display: flex;
-            width: $leftWidth;
             border: 1px solid;
             align-items: center;
             flex-flow: column;
         }
         .right {
             display: flex;
-            width: $rightWidth;
+            width: 100%;
         }
     }
 

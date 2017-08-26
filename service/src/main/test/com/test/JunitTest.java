@@ -5,6 +5,7 @@ import org.junit.Test;
 import java.io.File;
 import java.io.IOException;
 import java.nio.file.*;
+import java.util.UUID;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -15,7 +16,7 @@ import java.util.concurrent.Executors;
 public class JunitTest {
     private static ExecutorService executorService = Executors.newFixedThreadPool(1);//ThreadExecutor();
 
-    public static void main(String[] args) {
+   /* public static void main(String[] args) {
         try {
 
             FileSystem fileSystem = FileSystems.getDefault();
@@ -44,5 +45,10 @@ public class JunitTest {
         } catch (Exception e) {
             e.printStackTrace();
         }
+    }*/
+
+    public static void main(String[] args) {
+        UUID uuid = UUID.randomUUID();
+        System.out.println(uuid);
     }
 }
