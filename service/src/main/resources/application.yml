@@ -47,9 +47,9 @@ eureka:
       defaultZone: http://localhost:8080/eureka/  #注册中心地址
   instance:
     hostname: localhost
-    instance-id: http://localhost:8081
+    instance-id: localhost:80
 server:
-  port: 8081
+  port: 80
 logging:
   file: spirngboot.log
   level: debug

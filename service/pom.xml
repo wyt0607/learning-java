@@ -121,13 +121,13 @@
             <artifactId>redisson</artifactId>
             <version>3.4.2</version>
         </dependency>-->
+        <!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-data-redis -->
         <dependency>
             <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-redis</artifactId>
-            <version>1.4.6.RELEASE</version>
+            <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
     </dependencies>
-    <build>
+    <!--<build>
         <plugins>
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
@@ -145,7 +145,7 @@
                     <fork>true</fork>
                 </configuration>
                 <dependencies>
-                    <!-- spring热部署-->
+                    &lt;!&ndash; spring热部署&ndash;&gt;
                     <dependency>
                         <groupId>org.springframework</groupId>
                         <artifactId>springloaded</artifactId>
@@ -154,5 +154,5 @@
                 </dependencies>
             </plugin>
         </plugins>
-    </build>
+    </build>-->
 </project>
