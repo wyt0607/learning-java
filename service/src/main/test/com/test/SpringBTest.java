@@ -7,17 +7,17 @@ import com.util.CommonUtil;
 import com.util.JWTUtil;
 import io.jsonwebtoken.Claims;
 import org.json.JSONObject;
-import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.data.redis.connection.RedisClusterConnection;
+import org.springframework.data.redis.connection.RedisConnection;
+import org.springframework.data.redis.connection.RedisConnectionFactory;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by WTON on 2017/5/21.
@@ -28,13 +28,13 @@ public class SpringBTest {
 
     @Autowired
     private IUserDao userDao;
-
     @Autowired
-    private StringRedisTemplate stringRedisTemplate;
+    private RedisConnectionFactory redisConnectionFactory;
+
 
     @Test
     @Rollback
-    public void test(){
+    public void test() {
         User user = userDao.findByUsername("wyt");
         Map map = CommonUtil.entityToMap(user);
         JSONObject jsonObject = new JSONObject(map);
@@ -49,10 +49,16 @@ public class SpringBTest {
     }
 
     @Test
-    public  void  testRedis(){
-        // 保存字符串
-        stringRedisTemplate.opsForValue().set("bbb", "123123");
-        Assert.assertEquals("111", stringRedisTemplate.opsForValue().get("aaa"));
+    public void testRedis() {
+        RedisConnection connection = redisConnectionFactory.getConnection();
+
+        connection.set("xixi".getBytes(), "前二天".getBytes());
+
+        byte[] bytes = connection.get("xixi".getBytes());
+        byte[] bytes1 = connection.get("xiexie".getBytes());
+        String s1 = new String(bytes1);
+        String s = new String(bytes);
+        System.out.println(s);
     }
 
 }

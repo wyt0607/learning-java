@@ -53,14 +53,12 @@ public class AuthFilter implements Filter{
             logger.debug(s);
         }
         Cookie[] cookies = httpServletRequest.getCookies();
-        Arrays.asList(cookies).forEach((cookie)->{
+        if(cookies!=null){
+            Arrays.asList(cookies).forEach((cookie)->{
                 cookie.getName();
                 cookie.getValue();
-        });
-
-
-
-
+            });
+        }
         chain.doFilter(request, response);
     }
 

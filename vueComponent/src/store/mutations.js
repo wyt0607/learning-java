@@ -1,7 +1,7 @@
 /**
  * Created by wton on 2016/10/6.
  */
-import {INIT_WEBSOCKET, SET_MESSAGE, MDZZ, SET_USERLIST} from "./types"
+import {INIT_WEBSOCKET, SET_MESSAGE, MDZZ, SET_USERLIST, SET_PRIVATE_MESSAGE} from "./types"
 
 const mutations = {
     [INIT_WEBSOCKET]: (state, websocketClient) => {
@@ -14,8 +14,13 @@ const mutations = {
         state.mdzz = mdzz;
     },
     [SET_USERLIST]: (state, {data}) => {
+        console.log(data)
         let {userList} = JSON.parse(data);
         state.userList = JSON.parse(userList);
+    },
+    [SET_PRIVATE_MESSAGE]: (state, {data}) => {
+        console.log(data)
+        state.priMessages.push(JSON.parse(data))
     }
 }
 

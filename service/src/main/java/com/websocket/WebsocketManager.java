@@ -14,9 +14,7 @@ import java.util.Map;
 public class WebsocketManager implements WebSocketConfigurer {
 
     private String[] allowsOrigins={
-            "http://localhost:8888",
-            "https://wton.vip",
-            "https://wton.vip:443"
+            "http://localhost:8888"
     };
 
     @Override

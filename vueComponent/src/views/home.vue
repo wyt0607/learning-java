@@ -25,7 +25,6 @@
 
     .box {
         display: flex;
-        margin: 0px 50px;
         > div {
             margin: 10px;
         }
@@ -80,13 +79,12 @@
     export default {
         data() {
             return {
-                links: [
-                    "/home/temp",
-                    "/home/test",
-                    "/home/chat"
-                ]
+                links: []
             }
         },
-        components: {}
-    }
+        methods: {
+
+        },
+        components: {},
+         }
 </script>

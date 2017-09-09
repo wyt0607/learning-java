@@ -5,7 +5,7 @@
 ## Build Setup
 
 ``` bash
-# 安装依赖
+# 安装依赖  
 npm install
 
 # 开发

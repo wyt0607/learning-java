@@ -1,12 +1,17 @@
 <template>
     <div id="chat" class="chat">
+        <div class="zz" v-if="zzFlag">
+            <div>
+                <input type="text" placeholder="输入昵称" v-model="name" @keyup.enter="toggleZZ">
+            </div>
+        </div>
         <div class="chat-left">
             <div class="chat-left-item">
                 <div class="chat-head">
                     公屏:
                 </div>
                 <div class="chat-content">
-                    <div v-for="item in messages">{{item.userId}}说:{{item.message}}</div>
+                    <div v-for="item in messages">{{item.userId == name ? "你" : item.userId}}说:{{item.message}}</div>
                 </div>
             </div>
             <div class="chat-left-item">
@@ -14,7 +19,10 @@
                     私聊:
                 </div>
                 <div class="chat-content">
-                    <div v-for="item in 100">{{item}}</div>
+                    <div v-for="item in priMessages">
+                        {{item.userId == name ? "你" : item.userId}}对{{item.targetId == name ? "你" : item.targetId
+                        }}说:{{item.message}}
+                    </div>
                 </div>
             </div>
             <div class="chat-left-item">
@@ -27,11 +35,12 @@
                     </ul>
                 </div>
                 <div>
-                    <input v-model="message" :placeholder="prompting" @keyup.enter="sendMessage('sendAll','SET_MESSAGE')">
+                    <input v-model="message" :placeholder="prompting"
+                           @keyup.enter="sendAll">
                 </div>
                 <div>
-                    <button @click="sendMessage('sendAll','SET_MESSAGE')">发送公屏</button>
-                    <button @click="sendSomeOne()">发送私聊</button>
+                    <button @click="sendAll">发送公屏</button>
+                    <button @click="sendSomeOne">发送私聊</button>
                 </div>
             </div>
         </div>
@@ -40,7 +49,7 @@
                 <span>在线人数:{{userList.length}}</span>
                 <ul>
                     <li v-for="item in userList" @click="addSendList(item)">
-                        {{item}}
+                        {{item == name ? item + '(你)' : item}}
                     </li>
                 </ul>
             </div>
@@ -72,6 +81,9 @@
                 span {
                     margin-left: 5px;
                 }
+                li {
+                    cursor: pointer;
+                }
             }
         }
         .chat-right {
@@ -90,6 +102,20 @@
                     margin-top: 5px;
                 }
             }
+        }
+        .zz {
+            display: flex;
+            position: fixed;
+            z-index: 999;
+            width: 100%;
+            height: 100%;
+            left: 0;
+            top: 0;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(0, 0, 0, .5);
+            transition: opacity .3s ease;
+            margin: 0px;
         }
     }
 
@@ -113,37 +139,47 @@
                 message: null,
                 websocketClient: null,
                 prompting: '发送消息',
-                userId: (Math.random() * 10000) / 100,
+                userId: '机器人' + parseInt(Math.random() * 100) + '号',
                 targetId: null,
-                sendList: []
+                sendList: [],
+                name: null,
+                zzFlag: true
+            }
+        },
+        filters: {
+            toggleName(name, ss) {
+                console.log(name)
+                console.log(ss)
             }
         },
         asyncData({store, route}) {
         },
         methods: {
-            sendMessage(targetId,type) {
+            sendMessage(targetId, type) {
                 if (this.message != null) {
-                    let msg = JSON.stringify({
-                        userId: this.userId,
-                        message: this.message,
-                        targetId: targetId,
-                        type: type
-                    })
+                    let msg = JSON.stringify(this.setMessage(targetId, type));
                     this.websocketClient.send(msg);
-                    this.message = null;
                     this.prompting = '发送消息'
                 } else {
                     this.prompting = '发送消息不能为空'
                 }
             },
             sendSomeOne() {
-
+                console.log(this.sendTargets)
+                let msg = this.setMessage(this.sendTargets, "SET_PRIVATE_MESSAGE")
+                this.$store.commit(msg.type, {data: JSON.stringify(msg)});
                 this.sendList.forEach((targetId) => {
-                    this.sendMessage(targetId)
+                    console.log(targetId)
+                    this.sendMessage(targetId, msg.type)
                 })
+                this.message = null;
+            },
+            sendAll(type) {
+                this.sendMessage("sendAll", "SET_MESSAGE");
+                this.message = null;
             },
             addSendList(userId) {
-                if (!this.sendList.includes(userId)) {
+                if (userId != this.name && !this.sendList.includes(userId)) {
                     this.sendList.push(userId);
                 }
             },
@@ -153,11 +189,24 @@
                 });
                 this.sendList = [];
                 this.sendList.push(...temp)
+            },
+            toggleZZ() {
+                if (this.name != null && this.name != '') {
+                    this.zzFlag = false;
+                    this.websocketClient = new WebSocket("ws://localhost/initWebsocket?" + this.name)
+                    this.$store.dispatch("INIT_WEBSOCKET", this.websocketClient)
+                }
+            },
+            setMessage(targetId, type) {
+                return {
+                    userId: this.name,
+                    message: this.message,
+                    targetId: targetId,
+                    type: type
+                }
             }
         },
         mounted() {
-            this.websocketClient = new WebSocket("ws://localhost:8081/initWebsocket?" + this.userId)
-            this.$store.dispatch("INIT_WEBSOCKET", this.websocketClient)
         },
         computed: {
             messages() {
@@ -165,6 +214,16 @@
             },
             userList() {
                 return this.$store.state.userList;
+            },
+            priMessages() {
+                return this.$store.state.priMessages;
+            },
+            sendTargets() {
+                let st = '';
+                this.sendList.forEach(e => {
+                    st += e + ",";
+                })
+                return st.substring(0, st.length - 1);
             }
         },
         components: {}

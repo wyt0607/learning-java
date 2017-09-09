@@ -4,6 +4,9 @@
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss" scoped="">
+    body{
+        margin:0px;
+    }
     #app{
         background: url("./assets/mdzz/mdzz3.jpg") no-repeat;
         background-size:100%;
@@ -17,7 +20,7 @@
         },
 
         beforeRouteEnter(to, from, next) {
-            next("/home/temp")
+            next("/home/chat")
         }
     }
 </script>

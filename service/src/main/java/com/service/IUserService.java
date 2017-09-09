@@ -7,6 +7,7 @@ import com.entity.User;
  */
 public interface IUserService {
 
+
     User findById(Integer id);
 
     String save(User user);

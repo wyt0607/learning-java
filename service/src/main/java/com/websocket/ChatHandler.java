@@ -1,17 +1,26 @@
 package com.websocket;
 
 import com.enums.EnumTypes;
+import com.service.impl.RedisService;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.*;
+import sun.plugin2.message.TextEventMessage;
 
 import java.io.IOException;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
 public class ChatHandler implements WebSocketHandler {
+
+    @Autowired
+    private RedisService redisService;
 
     private static Map<String, WebSocketSession> websocketMap = new HashMap();
 
@@ -28,12 +37,18 @@ public class ChatHandler implements WebSocketHandler {
 
     @Override
     public void handleMessage(WebSocketSession session, WebSocketMessage<?> message) throws Exception {
-        logger.info(message.getPayload().toString());
         JSONObject jsonObject = new JSONObject(message.getPayload().toString());
+        logger.info(jsonObject.toString());
+        Date temp = new Date();
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-M-d H:m:s");
+        String date = dateFormat.format(temp);
+        jsonObject.put("date", date);
+        jsonObject.put("time", temp.getTime());
+        TextMessage textMessage = new TextMessage(jsonObject.toString().getBytes());
         if ("sendAll".equals(jsonObject.get("targetId").toString())) {
-            sendAll(message);
+            sendAll(textMessage);
         } else {
-            sendOne(jsonObject.get("targetId").toString(), message);
+            sendOne(jsonObject.get("targetId").toString(), textMessage);
         }
     }
 
@@ -77,9 +92,9 @@ public class ChatHandler implements WebSocketHandler {
 
     public void userOnline() throws JSONException {
         JSONObject jsonObject = new JSONObject();
-        jsonObject.put("userList", websocketMap.keySet());
+        jsonObject.put("userList", JSONObject.wrap(websocketMap.keySet()).toString());
         jsonObject.put("type", EnumTypes.SET_USERLIST);
-        WebSocketMessage message = new TextMessage(jsonObject.toString());
+        WebSocketMessage message = new TextMessage(jsonObject.toString().getBytes());
         websocketMap.forEach((k, v) -> {
             try {
                 v.sendMessage(message);

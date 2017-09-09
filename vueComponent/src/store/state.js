@@ -6,7 +6,8 @@ const state = {
     websocketClient: null,
     messages: [],
     mdzz: [],
-    userList: []
+    userList: [],
+    priMessages:[]
 }
 
 
