@@ -193,6 +193,7 @@
             toggleZZ() {
                 if (this.name != null && this.name != '') {
                     this.zzFlag = false;
+
                     this.websocketClient = new WebSocket("wss://localhost:9999/initWebsocket?" + this.name)
                     this.$store.dispatch("INIT_WEBSOCKET", this.websocketClient)
                 }

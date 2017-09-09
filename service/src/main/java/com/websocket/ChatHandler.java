@@ -2,7 +2,6 @@ package com.websocket;
 
 import com.enums.EnumTypes;
 import com.service.impl.RedisService;
-import org.json.JSONException;
 import org.json.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +41,7 @@ public class ChatHandler implements WebSocketHandler {
         String date = dateFormat.format(temp);
         jsonObject.put("date", date);
         jsonObject.put("time", temp.getTime());
-        TextMessage textMessage = new TextMessage(jsonObject.toString().getBytes());
+        TextMessage textMessage = new TextMessage(jsonObject.toString().getBytes("UTF-8"));
         logger.info(textMessage.getPayload());
         if ("sendAll".equals(jsonObject.get("targetId").toString())) {
             sendAll(textMessage);
@@ -89,11 +88,11 @@ public class ChatHandler implements WebSocketHandler {
         }
     }
 
-    public void userOnline() throws JSONException {
+    public void userOnline() throws Exception {
         JSONObject jsonObject = new JSONObject();
         jsonObject.put("userList", JSONObject.wrap(websocketMap.keySet()).toString());
         jsonObject.put("type", EnumTypes.SET_USERLIST);
-        WebSocketMessage message = new TextMessage(jsonObject.toString().getBytes());
+        WebSocketMessage message = new TextMessage(jsonObject.toString().getBytes("UTF-8"));
         websocketMap.forEach((k, v) -> {
             try {
                 v.sendMessage(message);
