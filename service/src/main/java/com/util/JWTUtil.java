@@ -1,19 +1,14 @@
 package com.util;
 
-import com.entity.User;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.JwtBuilder;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import org.apache.commons.codec.binary.Base64;
-import org.json.JSONObject;
 
 import javax.crypto.SecretKey;
 import javax.crypto.spec.SecretKeySpec;
-import java.util.Arrays;
 import java.util.Date;
-import java.util.Map;
-import java.util.UUID;
 
 /**
  * Created by WTON on 2017/5/17.

@@ -6,15 +6,14 @@ import org.springframework.web.socket.config.annotation.EnableWebSocket;
 import org.springframework.web.socket.config.annotation.WebSocketConfigurer;
 import org.springframework.web.socket.config.annotation.WebSocketHandlerRegistry;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @Configuration
 @EnableWebSocket
 public class WebsocketManager implements WebSocketConfigurer {
 
     private String[] allowsOrigins={
-            "http://localhost:8888"
+            "http://localhost:8888",
+            "https://wton.vip",
+            "http://wton.vip"
     };
 
     @Override

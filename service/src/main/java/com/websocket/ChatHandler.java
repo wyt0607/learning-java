@@ -8,11 +8,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.socket.*;
-import sun.plugin2.message.TextEventMessage;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
@@ -45,6 +43,7 @@ public class ChatHandler implements WebSocketHandler {
         jsonObject.put("date", date);
         jsonObject.put("time", temp.getTime());
         TextMessage textMessage = new TextMessage(jsonObject.toString().getBytes());
+        logger.info(textMessage.getPayload());
         if ("sendAll".equals(jsonObject.get("targetId").toString())) {
             sendAll(textMessage);
         } else {

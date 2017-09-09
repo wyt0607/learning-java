@@ -2,16 +2,13 @@ package com.filter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
 
 /**
  * Created by WTON on 2017/5/16.
@@ -22,7 +19,8 @@ public class CrossFilter implements Filter {
     private Logger logger = LoggerFactory.getLogger(CrossFilter.class);
     private String[] whiteList = {
             "http://localhost:8888",
-            "https://wton.vip"
+            "https://wton.vip",
+            "http://wton.vip"
     };
 
     @Override
