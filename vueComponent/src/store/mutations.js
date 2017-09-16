@@ -21,6 +21,11 @@ const mutations = {
     [SET_PRIVATE_MESSAGE]: (state, {data}) => {
         console.log(data)
         state.priMessages.push(JSON.parse(data))
+    },
+    SET_NAME: (state, name) => {
+        console.log(name)
+
+        state.name = name
     }
 }
 

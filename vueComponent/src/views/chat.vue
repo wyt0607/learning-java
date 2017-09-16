@@ -10,19 +10,20 @@
                 <div class="chat-head">
                     公屏:
                 </div>
-                <div class="chat-content">
-                    <div v-for="item in messages">{{item.userId == name ? "你" : item.userId}}说:{{item.message}}</div>
+                <div class="chat-content" ref="public" @mouseover="publicScroll=false" @mouseout="publicScroll=true">
+                    <wton-message :message="item" v-for="(item,index) in messages" :key="index"
+                                  v-on:exec="extractUserId"></wton-message>
+
                 </div>
             </div>
             <div class="chat-left-item">
                 <div class="chat-head">
                     私聊:
                 </div>
-                <div class="chat-content">
-                    <div v-for="item in priMessages">
-                        {{item.userId == name ? "你" : item.userId}}对{{item.targetId == name ? "你" : item.targetId
-                        }}说:{{item.message}}
-                    </div>
+                <div class="chat-content" ref="private" @mouseover="privateScroll=false" @mouseout="privateScroll=true">
+                    <wton-message :message="item" v-for="(item,index) in priMessages" :key="index"
+                                  v-on:exec="extractUserId"></wton-message>
+
                 </div>
             </div>
             <div class="chat-left-item">
@@ -35,8 +36,9 @@
                     </ul>
                 </div>
                 <div>
+
                     <input v-model="message" :placeholder="prompting"
-                           @keyup.enter="sendAll">
+                           @keyup.ctrl.enter="sendSomeOne" @keyup.enter="sendAll">
                 </div>
                 <div>
                     <button @click="sendAll">发送公屏</button>
@@ -73,11 +75,13 @@
             flex-flow: column;
             align-items: center;
             margin-left: -5px;
+
             .chat-left-item {
                 margin: 20px;
                 width: 550px;
-                height: 150px;
+                height: 300px;
                 border: solid 1px;
+                border-radius: 15px;
                 span {
                     margin-left: 5px;
                 }
@@ -120,18 +124,22 @@
     }
 
     .chat-head {
-        margin: 5px;
-
+        height: 25px;
+        background: #878ECD;
+        color: #ffffff;
+        border-radius: 15px 15px 0px 0px;
+        padding: 10px 25px;
     }
 
     .chat-content {
-        height: 122px;
-        border-top: 1px solid;
+
+        height: 250px;
         overflow-x: hidden;
     }
 </style>
 <script>
     import {SET_MESSAGE} from '../store/types'
+    import wtonMessage from '../components/common/wton-message.vue'
 
     export default {
         data() {
@@ -143,7 +151,9 @@
                 targetId: null,
                 sendList: [],
                 name: null,
-                zzFlag: true
+                zzFlag: true,
+                publicScroll: true,
+                privateScroll: true
             }
         },
         filters: {
@@ -175,13 +185,20 @@
                 this.message = null;
             },
             sendAll(type) {
+                console.log('sendall')
                 this.sendMessage("sendAll", "SET_MESSAGE");
                 this.message = null;
             },
             addSendList(userId) {
+                console.log(userId)
                 if (userId != this.name && !this.sendList.includes(userId)) {
                     this.sendList.push(userId);
                 }
+            },
+            extractUserId({userId}) {
+                console.log(userId)
+
+                this.addSendList(userId)
             },
             removeSendList(userId) {
                 let temp = this.sendList.filter((e) => {
@@ -192,22 +209,23 @@
             },
             toggleZZ() {
                 if (this.name != null && this.name != '') {
+                    this.$store.commit("SET_NAME", this.name)
                     this.zzFlag = false;
-
-                    this.websocketClient = new WebSocket("wss://localhost:9999/initWebsocket?" + this.name)
+                    this.websocketClient = new WebSocket("ws://wton.vip:9999/initWebsocket?" + this.name)
                     this.$store.dispatch("INIT_WEBSOCKET", this.websocketClient)
                 }
             },
             setMessage(targetId, type) {
                 return {
                     userId: this.name,
-                    message: this.message,
+                    text: this.message,
                     targetId: targetId,
                     type: type
                 }
             }
         },
         mounted() {
+            //this.toggleZZ()
         },
         computed: {
             messages() {
@@ -227,6 +245,16 @@
                 return st.substring(0, st.length - 1);
             }
         },
-        components: {}
+        components: {
+            wtonMessage
+        },
+        updated: function () {
+            if (this.publicScroll) {
+                this.$refs.public.scrollTop = this.$refs.public.scrollHeight
+            }
+            if (this.private) {
+                this.$refs.private.scrollTop = this.$refs.private.scrollHeight
+            }
+        }
     }
 </script>
