@@ -8,7 +8,7 @@
             <div class="middle">
                 <ul>
                     <li v-for="(item ,index) in links">
-                        <router-link :to="item">测试{{index + 1}}</router-link>
+                        <router-link :to="item.url">{{item.name}}</router-link>
                     </li>
                 </ul>
             </div>
@@ -71,20 +71,21 @@
             opacity: 1;
         }
     }
-
-
 </style>
 <script>
-
     export default {
         data() {
             return {
-                links: []
+                links: [
+                    {name: '首页', url: "/home/"},
+                    {name: '聊天室', url: "/home/chat"},
+                ]
             }
         },
-        methods: {
-
-        },
+        methods: {},
         components: {},
-         }
+        created() {
+            this.$router.push('/home/register')
+        }
+    }
 </script>

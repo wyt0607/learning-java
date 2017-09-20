@@ -1,5 +1,5 @@
 <template>
-    <div id="wtonForm">
+    <div id="wtonForm" style="display: flex;justify-content: center">
         <div v-for=" row in rows" ref="total">
             <input :name="row.name!=null?row.name:row"
                    :placeholder="row.placeholder!=null?row.placeholder:'请输入'+row"
@@ -43,12 +43,12 @@
         methods: {
             getValues(){
                 let total = this.$refs.total;
-                let map = new Map();
+                let formData = new FormData();
                 total.forEach((e) => {
                     let input = e.childNodes[0];
-                    map.set(input.name, input.value);
+                    formData.append(input.name, input.value);
                 })
-                this.$emit("result", map)
+                this.$emit("result", formData)
             },
             reset(){
                 let total = this.$refs.total;

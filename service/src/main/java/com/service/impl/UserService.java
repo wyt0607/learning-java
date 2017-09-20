@@ -20,7 +20,7 @@ import java.util.UUID;
 @Service
 public class UserService implements IUserService {
 
-    private Logger logger= LoggerFactory.getLogger(this.getClass());
+    private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     @Override
     public User findById(Integer id) {
@@ -31,25 +31,27 @@ public class UserService implements IUserService {
     private IUserDao userDao;
 
     @Override
-    public String save(User user) {
-
-        User result = userDao.findByUsername(user.getUsername());
-        if (result == null) {
-            userDao.save(user);
-            return "success";
+    public User register(String userName, String password) {
+        User user = userDao.findByUsername(userName);
+        if (CommonUtil.isEmpty(user)) {
+            logger.info("用户注册成功");
+            return userDao.save(user);
+        } else {
+            logger.info("用户注册失败");
+            return null;
         }
-        return "fail";
     }
 
-    public String login(User user) {
-        User result = userDao.findByUsername(user.getUsername());
-        if (CommonUtil.isEmpty(result)) {
-            if (result.getPassword().equals(user.getPassword())) {
-                Map map = CommonUtil.entityToMap(result);
+    @Override
+    public User login(String userName, String password) {
+        User user = userDao.findByUsername(userName);
+        if (CommonUtil.isEmpty(user)) {
+            if (user.getPassword().equals(password)) {
+                Map map = CommonUtil.entityToMap(user);
                 try {
                     String jwt = JWTUtil.createJWT(UUID.randomUUID().toString(), new JSONObject(map).toString(), 9999);
                     logger.info("用户" + user.getUsername() + "凭证:" + jwt);
-                    return jwt;
+                    return null;
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

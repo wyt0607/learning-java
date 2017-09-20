@@ -7,8 +7,9 @@ const state = {
     messages: [],
     mdzz: [],
     userList: [],
-    priMessages:[],
-    name:null
+    priMessages: [],
+    name: null,
+    userInfo: null
 }
 
 

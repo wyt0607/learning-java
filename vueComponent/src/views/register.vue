@@ -1,13 +1,14 @@
 <template>
-    <div id="register">
-        <wton-form :rows="rows" @result="getValue"></wton-form>
+    <div id="register" style="width: 100%;display: flex;justify-content: center;align-items: center">
+        <wton-form :rows="rows" @result="register"></wton-form>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss" scoped></style>
 <script>
-    import wtonForm from '../common/wton-form.vue';
-    export default{
-        data(){
+    import wtonForm from '../components/common/wton-form.vue';
+
+    export default {
+        data() {
             return {
                 rows: [
                     'username', "password"
@@ -46,10 +47,12 @@
             }
         },
         methods: {
-            register(){
-                console.log("注册成功!")
+            register(e) {
+
+                console.log(e)
+                this.$store.dispatch("REGISTER", e)
             },
-            getValue(e){
+            getValue(e) {
                 console.log(e)
             }
         },

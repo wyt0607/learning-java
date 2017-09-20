@@ -255,6 +255,10 @@
             if (this.private) {
                 this.$refs.private.scrollTop = this.$refs.private.scrollHeight
             }
+        },
+        beforeRouteLeave(to, from, next) {
+            this.websocketClient.close();
+            next();
         }
     }
 </script>

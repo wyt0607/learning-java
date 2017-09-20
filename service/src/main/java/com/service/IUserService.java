@@ -1,5 +1,6 @@
 package com.service;
 
+import com.entity.Status;
 import com.entity.User;
 
 /**
@@ -10,5 +11,7 @@ public interface IUserService {
 
     User findById(Integer id);
 
-    String save(User user);
+    User register(String userName, String password);
+
+    User login(String userName, String password);
 }

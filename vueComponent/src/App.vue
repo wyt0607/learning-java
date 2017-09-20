@@ -4,23 +4,19 @@
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss" scoped="">
-    body{
-        margin:0px;
+    body {
+        margin: 0px;
     }
-    #app{
+
+    #app {
         background: url("./assets/mdzz/mdzz3.jpg") no-repeat;
-        background-size:100%;
+        background-size: 100%;
     }
 </style>
 <script>
     export default {
-        data() {
-            return {
-            }
-        },
-
         beforeRouteEnter(to, from, next) {
-            next("/home/chat")
+            next("/home")
         }
     }
 </script>
