@@ -17,7 +17,6 @@ Object.keys(file.devDependencies).forEach(function (e) {
 const cmds = [
     cmdStr
 ]
-console.log()
 cmds.forEach((e)=>{
     console.log(e)
     exec(e,(error,stdout,stderror)=>{

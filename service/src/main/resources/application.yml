@@ -48,10 +48,10 @@ eureka:
 server:
   port: 9999
   ssl:
-    key-store: classpath:.keystore
+    key-store: classpath:ServerCert.jks
     key-store-password: 123456
-    keyStoreType: JKS
-    keyAlias: tomcat
+    keyStoreType: jks
+    keyAlias: server
 logging:
   file: spirngboot.log
   level: debug

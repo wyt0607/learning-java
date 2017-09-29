@@ -38,7 +38,7 @@ public class CrossFilter implements Filter {
         if (containsFlag) {
             resp.addHeader("Access-Control-Allow-Origin", origin);
             resp.addHeader("Access-Control-Allow-Headers",
-                    "Content-Type");
+                    "Content-Type,Authorization");
         }
         chain.doFilter(request, response);
     }

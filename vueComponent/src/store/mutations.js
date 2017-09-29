@@ -1,7 +1,14 @@
 /**
  * Created by wton on 2016/10/6.
  */
-import {INIT_WEBSOCKET, SET_MESSAGE, MDZZ, SET_USERLIST, SET_PRIVATE_MESSAGE} from "./types"
+import {
+    INIT_WEBSOCKET,
+    SET_MESSAGE,
+    MDZZ,
+    SET_USERLIST,
+    SET_PRIVATE_MESSAGE,
+    SET_JWT
+} from "./types"
 
 const mutations = {
     [INIT_WEBSOCKET]: (state, websocketClient) => {
@@ -26,6 +33,9 @@ const mutations = {
         console.log(name)
 
         state.name = name
+    },
+    [SET_JWT]: (state, jwt) => {
+        state.jwt = jwt
     }
 }
 

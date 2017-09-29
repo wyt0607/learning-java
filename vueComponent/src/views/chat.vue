@@ -158,8 +158,8 @@
         },
         filters: {
             toggleName(name, ss) {
-                console.log(name)
-                console.log(ss)
+        /*        console.log(name)
+                console.log(ss)*/
             }
         },
         asyncData({store, route}) {
@@ -211,7 +211,8 @@
                 if (this.name != null && this.name != '') {
                     this.$store.commit("SET_NAME", this.name)
                     this.zzFlag = false;
-                    this.websocketClient = new WebSocket("ws://wton.vip:9999/initWebsocket?" + this.name)
+
+                    this.websocketClient = new WebSocket("wss://localhost:9999/initWebsocket?" + this.name)
                     this.$store.dispatch("INIT_WEBSOCKET", this.websocketClient)
                 }
             },

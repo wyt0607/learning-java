@@ -1,6 +1,20 @@
 <template>
-    <div id="register" style="width: 100%;display: flex;justify-content: center;align-items: center">
-        <wton-form :rows="rows" @result="register"></wton-form>
+    <div id="register">
+        <div>
+            <label>注册:
+                <wton-form :rows="rows" @result="register"></wton-form>
+            </label>
+        </div>
+        <div>
+            <label>登录:
+                <wton-form :rows="rows" @result="login"></wton-form>
+            </label>
+        </div>
+        <div>
+            <label>测试:
+                <wton-form :rows="rows" @result="test"></wton-form>
+            </label>
+        </div>
     </div>
 </template>
 <style lang="scss" rel="stylesheet/scss" scoped></style>
@@ -48,12 +62,13 @@
         },
         methods: {
             register(e) {
-
-                console.log(e)
                 this.$store.dispatch("REGISTER", e)
             },
-            getValue(e) {
-                console.log(e)
+            login(e) {
+                this.$store.dispatch("LOGIN", e)
+            },
+            test(e) {
+                this.$store.dispatch("test", e)
             }
         },
         components: {

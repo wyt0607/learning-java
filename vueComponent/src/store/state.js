@@ -9,7 +9,8 @@ const state = {
     userList: [],
     priMessages: [],
     name: null,
-    userInfo: null
+    userInfo: null,
+    jwt:null
 }
 
 
