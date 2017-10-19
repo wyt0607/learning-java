@@ -16,7 +16,7 @@ const app = express()
 
 const template = fs.readFileSync(resolve('./src/index.template.html'), 'utf-8')
 
-const mdzz = fs.readdirSync("./src/assets/mdzz");
+const mdzz='';
 
 function createRenderer(bundle, options) {
     // https://github.com/vuejs/vue/blob/dev/packages/vue-server-renderer/README.md#why-use-bundlerenderer

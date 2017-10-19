@@ -9,7 +9,6 @@
     }
 
     #app {
-        background: url("./assets/mdzz/mdzz3.jpg") no-repeat;
         background-size: 100%;
     }
 </style>

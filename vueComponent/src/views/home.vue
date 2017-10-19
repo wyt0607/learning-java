@@ -2,7 +2,7 @@
     <div id="home" class="box">
         <div class="left">
             <div class="head">
-                <img class="head-img" src="../assets/mdzz/mdzz16.jpg" alt="mdzz">
+                <img class="head-img" src="" alt="mdzz">
             </div>
 
             <div class="middle">
@@ -85,7 +85,7 @@
         methods: {},
         components: {},
         created() {
-            this.$router.push('/home/register')
+            this.$router.push('/home/chat')
         }
     }
 </script>

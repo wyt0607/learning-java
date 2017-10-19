@@ -1,7 +1,7 @@
 <template>
     <div id="message" :class="['message',message.userId==name?'message-right':'message-left']">
         <div style="display: flex;">
-            <img src="../../assets/mdzz/mdzz1.jpg" alt="找不到图片" @click="getInfo">
+            <img src="" alt="找不到图片" @click="getInfo">
             <span v-if=" message.userId!=name">{{message.userId}}</span>
         </div>
 

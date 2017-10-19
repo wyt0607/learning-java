@@ -6,7 +6,6 @@ import VueRouter from "vue-router";
 import myViews from "../views/index.js";
 
 const app = () => import( '../App.vue');
-const temp = () => import( '../components/common/temp.vue');
 Vue.use(VueRouter);
 
 export function createRouter() {
@@ -23,14 +22,12 @@ export function createRouter() {
             {
                 path: '/home', component: myViews.home,
                 children: [
-                    {path: '/', component: temp},
                     {path: 'test', component: myViews.test},
                     {path: 'chat', component: myViews.chat},
                     {path: 'register', component: myViews.register}
                 ]
             },
             {path: '/test', component: myViews.test},
-            {path: "/mdzz", component: temp},
             {path: "*", component: app}
         ]
     });
