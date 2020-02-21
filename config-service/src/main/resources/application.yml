@@ -1,0 +1,30 @@
+server:
+  port: 8084
+spring:
+  application:
+    name: config-service
+eureka:
+  instance:
+    instance-id: ${eureka.instance.ip-address}:${server.port}
+    prefer-ip-address: true
+    ip-address: 127.0.0.1
+  client:
+    serviceUrl:
+      #注册中心地址
+      defaultZone: http://${eureka.instance.ip-address}:8761/eureka
+    register-with-eureka: false
+    fetch-registry: false
+# 配置监控的接口给 spring-boot-admin监控
+management:
+  endpoints:
+    web:
+      exposure:
+        include: '*'
+  endpoint:
+    health:
+      show-details: ALWAYS
+info:
+  version: 1.0.0
+logging:
+  file:
+    name: config-service.log

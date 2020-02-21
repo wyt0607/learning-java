@@ -1,0 +1,13 @@
+spring:
+  cloud:
+    gateway:
+      routes:
+        - id: mq-service
+          uri: http://localhost:8888
+          predicates:
+            - Path=/mq-service
+  application:
+    name: gateway-service
+server:
+  port: 8083
+test: 12312455566

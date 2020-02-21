@@ -1,0 +1,8 @@
+spring:
+  cloud:
+    config:
+      server:
+        native:
+          search-locations: file:///E:/workspace/github/spring-cloud-wton/config-service/src/main/resources/config
+  profiles:
+    active: native

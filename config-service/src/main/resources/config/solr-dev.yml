@@ -1,0 +1,7 @@
+server:
+  port: 8890
+spring:
+  application:
+    name: solr-service
+solr:
+  test: 1aaasssdddxcvcxvcxvc
