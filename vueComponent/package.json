@@ -18,7 +18,7 @@
     "es6-promise": "^4.1.1",
     "express": "^4.15.4",
     "lru-cache": "^4.1.1",
-    "serialize-javascript": "^1.4.0",
+    "serialize-javascript": "^2.1.1",
     "serve-favicon": "^2.4.4",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1",
