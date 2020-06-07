@@ -1,0 +1,9 @@
+server:
+  port: 8891
+spring:
+  application:
+    name: media-service
+upload:
+  disk: E
+  file-path: /workspace/github/spring-cloud-wton/media-service/target/classes/static
+  server-url: http://locahost:8891

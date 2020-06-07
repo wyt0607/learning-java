@@ -1,0 +1,4 @@
+knife4j:
+  markdowns: classpath:markdown/*
+
+
