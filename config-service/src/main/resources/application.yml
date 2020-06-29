@@ -19,6 +19,7 @@ management:
   endpoints:
     web:
       exposure:
+        #  暴露所有端点 .
         include: '*'
   endpoint:
     health:

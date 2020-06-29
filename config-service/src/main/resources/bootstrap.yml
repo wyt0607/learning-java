@@ -2,6 +2,7 @@ spring:
   cloud:
     config:
       server:
+        #  指定配置文件的搜索路径为本地目录 , git 和 svn的配置方式请自行参考官方文档
         native:
           search-locations: file:///E:/workspace/github/spring-cloud-wton/config-service/src/main/resources/config
   profiles:

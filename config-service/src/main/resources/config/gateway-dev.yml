@@ -2,6 +2,7 @@ spring:
   cloud:
     gateway:
       default-filters:
+        # 配置默认过滤器对所有的路由转发进行前缀的截取 , 例如访问 http://localhost:8083/mq-service  路由转发后 http://localhost:8888
         - StripPrefix=1
       routes:
         - id: mq-service

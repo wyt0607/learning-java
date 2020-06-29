@@ -22,3 +22,20 @@ management:
       show-details: ALWAYS
 info:
   version: 1.0.0
+# 熔断器配置
+resilience4j:
+  circuitbreaker:
+    configs:
+      #  配置默认配置
+      default:
+        slidingWindowSize: 100
+        permittedNumberOfCallsInHalfOpenState: 10
+        waitDurationInOpenState: 10000
+        failureRateThreshold: 60
+        eventConsumerBufferSize: 10
+        registerHealthIndicator: true
+    instances:
+      backendA:
+        # 引用默认配置
+        baseConfig: default
+        waitDurationInOpenState: 5000

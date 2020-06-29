@@ -3,5 +3,5 @@ server:
 spring:
   application:
     name: solr-service
-solr:
-  test: 1aaasssdddxcvcxvcxvc
+
+

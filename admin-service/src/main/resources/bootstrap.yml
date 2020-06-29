@@ -3,7 +3,4 @@ spring:
     config:
       uri: http://localhost:8084
       profile: dev
-      name: solr,common
-  data:
-    solr:
-      host: http://127.0.0.1:8983/solr
+      name: admin,common
