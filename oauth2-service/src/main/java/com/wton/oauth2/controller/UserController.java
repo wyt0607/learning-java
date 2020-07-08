@@ -14,6 +14,7 @@ import com.wton.oauth2.extend.RestStatusUtil;
 import com.wton.oauth2.service.IUserResourceService;
 import com.wton.oauth2.service.IUserRoleService;
 import com.wton.oauth2.service.IUserService;
+import io.swagger.annotations.Api;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -31,6 +32,7 @@ import java.util.stream.Stream;
  * @since 2020-04-04
  */
 @RestController
+@Api(tags = {"用户管理"})
 @RequestMapping("/oauth2/user")
 public class UserController extends AbstractBaseController {
 
