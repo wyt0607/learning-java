@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: config-service
+  cloud:
+    loadbalancer:
+      ribbon:
+        enabled: false
 eureka:
   instance:
     instance-id: ${eureka.instance.ip-address}:${server.port}

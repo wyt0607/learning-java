@@ -3,4 +3,29 @@ spring:
     config:
       uri: http://localhost:8084
       profile: dev
-      name: mq,common
+      name: common
+    stream:
+      kafka:
+        binder:
+          brokers: localhost
+          defaultBrokerPort: 9092
+          requiredAcks: 1
+          minPartitionCount: 1
+          autoCreateTopics: true
+          autoAddPartitions: true
+      bindings:
+        # 主题名称 , topic名称
+        WTON_TEST:
+          #  设置组id
+          group: wton
+          consumer:
+            #  批量消费模式
+            batch-mode: true
+            # 线程数, 消费者个数
+            concurrent: 1
+  application:
+    name: mq-service
+server:
+  port: 8881
+
+

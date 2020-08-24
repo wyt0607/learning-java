@@ -5,25 +5,21 @@ spring:
     stream:
       kafka:
         binder:
-          auto-add-partitions: true
-          transaction:
-            producer:
-              partition-count: 3
+          brokers: localhost
+          defaultBrokerPort: 9092
+          requiredAcks: 1
+          minPartitionCount: 1
+          autoCreateTopics: true
+          autoAddPartitions: true
       bindings:
+        # 主题名称 , topic名称
         WTON_TEST:
+          #  设置组id
+          group: wton
           consumer:
+            #  批量消费模式
             batch-mode: true
-  kafka:
-    producer:
-      value-serializer: org.springframework.kafka.support.serializer.JsonSerializer
-    consumer:
-      value-deserializer: org.springframework.kafka.support.serializer.JsonDeserializer
-      properties:
-        spring:
-          json:
-            trusted:
-              packages: '*'
-      fetch-max-wait: 500
-      max-poll-records: 1000
+            # 线程数, 消费者个数
+            concurrent: 1
   application:
     name: mq-service

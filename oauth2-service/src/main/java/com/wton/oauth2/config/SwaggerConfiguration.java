@@ -122,12 +122,6 @@ public class SwaggerConfiguration {
 
     private ApiInfo apiInfo() {
         return new ApiInfoBuilder()
-//                .title("同略声像档案系统接口文档")
-//                .description("同略声像档案系统swagger数据微服务接口")
-//                .termsOfServiceUrl("http://localhost:8081/frame-admin/swagger-ui.html")
-//                .contact(new Contact("Calvin", "", ""))
-//				.license("Licence Version 1.0")
-//				.licenseUrl("http://localhost:8081/frame-admin")
                 .version("1.0").build();
     }
 

@@ -1,21 +1,20 @@
 package com.wton.mq.kafka;
 
-import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.Input;
 import org.springframework.cloud.stream.annotation.Output;
-import org.springframework.cloud.stream.messaging.Processor;
-import org.springframework.cloud.stream.messaging.Sink;
 import org.springframework.messaging.MessageChannel;
+import org.springframework.messaging.SubscribableChannel;
 
 /**
  * @author wton
  */
-public interface KafkaMq {
+public interface KafkaClient {
 
     @Input("WTON_TEST")
-    MessageChannel wtonInput();
+    SubscribableChannel inputSubscribableChannel();
+
 
     @Output("WTON_TEST")
-    MessageChannel wtonOutput();
+    MessageChannel outChannel();
 
 }
