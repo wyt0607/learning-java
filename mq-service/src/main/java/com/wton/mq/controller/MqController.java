@@ -36,7 +36,7 @@ public class MqController {
 
     @ApiIgnore
     @GetMapping
-    public ModelAndView syncTodayData() {
+    public ModelAndView toDoc() {
         return new ModelAndView("doc.html");
     }
 
