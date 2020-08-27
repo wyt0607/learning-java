@@ -9,6 +9,9 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.cloud.stream.annotation.EnableBinding;
 import org.springframework.cloud.stream.annotation.StreamListener;
+import org.springframework.hateoas.EntityModel;
+import org.springframework.hateoas.Link;
+import org.springframework.hateoas.server.mvc.WebMvcLinkBuilder;
 import org.springframework.integration.support.MessageBuilder;
 import org.springframework.kafka.support.JacksonUtils;
 import org.springframework.messaging.Message;
@@ -39,6 +42,18 @@ public class MqController {
     public ModelAndView toDoc() {
         return new ModelAndView("doc.html");
     }
+
+    @ApiOperation("测试")
+    @GetMapping("/test")
+    public EntityModel<KafkaMq> test() {
+
+        Link link = WebMvcLinkBuilder.linkTo(WebMvcLinkBuilder.methodOn(MqController.class).test())
+                .withSelfRel()
+                .withDeprecation("巴拉巴拉巴拉巴拉吧");
+        KafkaMq kafkaMq = new KafkaMq();
+        return EntityModel.of(kafkaMq, link);
+    }
+
 
     @ApiOperation("发送消息")
     @GetMapping("/send")
