@@ -1,6 +1,6 @@
 package com.wton.oauth2.config;
 
-import com.wton.oauth2.extend.RestStatusUtil;
+import com.wton.oauth2.extend.RestStatus;
 import com.wton.oauth2.filter.XssFilter;
 import com.wton.oauth2.provider.UsernamePasswordAuthenticationProvider;
 import com.wton.oauth2.util.JsonUtil;
@@ -39,7 +39,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         http
                 .authorizeRequests()
                 // Knife4j 放行
-                .antMatchers("/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs","/v2/api-docs-ext").permitAll()
+                .antMatchers("/doc.html", "/webjars/**", "/swagger-resources/**", "/v2/api-docs", "/v2/api-docs-ext").permitAll()
                 .anyRequest().permitAll()
                 .and()
                 .csrf().disable()
@@ -52,7 +52,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                     response.setCharacterEncoding("utf-8");
                     response.setContentType(MediaType.APPLICATION_JSON_VALUE);
                     response.setStatus(HttpStatus.FORBIDDEN.value());
-                    response.getWriter().write(Objects.requireNonNull(JsonUtil.toJson(RestStatusUtil.failure("没有访问权限"))));
+                    response.getWriter().write(Objects.requireNonNull(JsonUtil.toJson(RestStatus.failure("没有访问权限"))));
                 });
     }
 

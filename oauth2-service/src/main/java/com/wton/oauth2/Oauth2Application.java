@@ -8,6 +8,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.web.servlet.ServletComponentScan;
 import org.springframework.context.annotation.Bean;
+import org.springframework.hateoas.client.LinkDiscoverers;
+import org.springframework.plugin.core.SimplePluginRegistry;
 
 @SpringBootApplication
 @ServletComponentScan
@@ -15,6 +17,15 @@ import org.springframework.context.annotation.Bean;
         @MapperScan("com.wton.oauth2.mapper")
 })
 public class Oauth2Application {
+
+    public static void main(String[] args) {
+        SpringApplication.run(Oauth2Application.class, args);
+    }
+
+    @Bean
+    public LinkDiscoverers linkDiscoverers() {
+        return new LinkDiscoverers(SimplePluginRegistry.create());
+    }
 
     @Bean
     public PaginationInterceptor paginationInterceptor() {
@@ -26,10 +37,6 @@ public class Oauth2Application {
         // 开启 count 的 join 优化,只针对部分 left join
         paginationInterceptor.setCountSqlParser(new JsqlParserCountOptimize(true));
         return paginationInterceptor;
-    }
-
-    public static void main(String[] args) {
-        SpringApplication.run(Oauth2Application.class, args);
     }
 
 }

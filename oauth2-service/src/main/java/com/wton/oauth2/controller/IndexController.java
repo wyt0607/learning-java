@@ -1,17 +1,18 @@
 package com.wton.oauth2.controller;
 
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
+import springfox.documentation.annotations.ApiIgnore;
 
 @RestController
 @RequestMapping("/")
 @RestControllerAdvice
 public class IndexController {
 
+    @ApiIgnore
     @GetMapping
-    @PreAuthorize("hasAnyAuthority('admin')")
-    public String index() {
-        return "12345";
+    public ModelAndView toDoc() {
+        return new ModelAndView("doc.html");
     }
 
     @PostMapping("/login")

@@ -19,7 +19,7 @@ import java.util.TimeZone;
  */
 public class JsonUtil {
 
-    private static Logger logger = LoggerFactory.getLogger(JsonUtil.class);
+    private static final Logger logger = LoggerFactory.getLogger(JsonUtil.class);
     private static ObjectMapper objectMapper;
 
     public static <T> T fromJson(String jsonString) {
@@ -69,4 +69,6 @@ public class JsonUtil {
         }
         return objectMapper;
     }
+
+
 }

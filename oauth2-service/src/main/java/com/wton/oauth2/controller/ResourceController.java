@@ -8,7 +8,6 @@ import com.wton.oauth2.dto.PageDTO;
 import com.wton.oauth2.dto.ResourceDTO;
 import com.wton.oauth2.entity.Resource;
 import com.wton.oauth2.extend.RestStatus;
-import com.wton.oauth2.extend.RestStatusUtil;
 import com.wton.oauth2.service.IResourceService;
 import org.springframework.web.bind.annotation.*;
 
@@ -37,29 +36,29 @@ public class ResourceController extends AbstractBaseController {
     public RestStatus<PageDTO<Resource>> getResource(ResourceDTO resourceDTO) {
         Resource resource = extractParams(resourceDTO, Resource.class);
         QueryWrapper<Resource> queryWrapper = Wrappers.query(resource);
-        Page<Resource> resourcePage = resourceService.page(getPage(resourceDTO), queryWrapper);
-        return RestStatusUtil.success(getPageDTO(resourcePage), RestStatusUtil.SUCCESS_DES);
+        Page<Resource> resourcePage = resourceService.page(convertToPage(resourceDTO), queryWrapper);
+        return RestStatus.success(convertToPageDTO(resourcePage));
     }
 
     @PostMapping
     public RestStatus<Resource> addResource(ResourceDTO resourceDTO) {
         Resource resource = extractParams(resourceDTO, Resource.class);
         resource = resourceService.addResource(resource);
-        return RestStatusUtil.success(resource, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(resource);
     }
 
     @PutMapping
     public RestStatus<Resource> updateResource(ResourceDTO resourceDTO) {
         Resource resource = extractParams(resourceDTO, Resource.class);
         resource = resourceService.updateResource(resource);
-        return RestStatusUtil.success(resource,RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(resource,RestStatus.SUCCESS_MSG);
     }
 
     @DeleteMapping
     public RestStatus<String> delResource(String... id) {
         List<String> idList = Arrays.asList(id);
         resourceService.removeByIds(idList);
-        return RestStatusUtil.success();
+        return RestStatus.success();
     }
 
 

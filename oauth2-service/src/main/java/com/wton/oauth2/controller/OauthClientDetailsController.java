@@ -5,7 +5,6 @@ import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.wton.oauth2.entity.OauthClientDetails;
 import com.wton.oauth2.extend.RestStatus;
-import com.wton.oauth2.extend.RestStatusUtil;
 import com.wton.oauth2.service.IOauthClientDetailsService;
 import io.swagger.annotations.ApiImplicitParam;
 import org.springframework.web.bind.annotation.*;
@@ -25,7 +24,7 @@ import java.util.List;
 @RequestMapping("/oauth2/oauth-client-details")
 public class OauthClientDetailsController extends AbstractBaseController {
 
-    private IOauthClientDetailsService oauthClientDetailsService;
+    private final IOauthClientDetailsService oauthClientDetailsService;
 
     public OauthClientDetailsController(IOauthClientDetailsService oauthClientDetailsService) {
         this.oauthClientDetailsService = oauthClientDetailsService;
@@ -36,27 +35,28 @@ public class OauthClientDetailsController extends AbstractBaseController {
         OauthClientDetails clientDetails = extractParams(oauthClientDetails, OauthClientDetails.class);
         QueryWrapper<OauthClientDetails> queryWrapper = Wrappers.query(clientDetails);
         List<OauthClientDetails> oauthClientDetailsList = oauthClientDetailsService.list(queryWrapper);
-        return RestStatusUtil.success(oauthClientDetailsList, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(oauthClientDetailsList);
     }
+
     //
-    @ApiImplicitParam(name = "authorizedGrantTypes", value = "授权类型", allowableValues = "authorization_code,implicit,refresh_token,client_credentials,password" )
+    @ApiImplicitParam(name = "authorizedGrantTypes", value = "授权类型", allowableValues = "authorization_code,implicit,refresh_token,client_credentials,password")
     @PostMapping
     public RestStatus<OauthClientDetails> addOauthClientDetail(OauthClientDetails oauthClientDetails) {
         oauthClientDetails = oauthClientDetailsService.addOauthClientDetail(oauthClientDetails);
-        return RestStatusUtil.success(oauthClientDetails, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(oauthClientDetails);
     }
 
     @PutMapping
     public RestStatus<OauthClientDetails> updateOauthClientDetail(OauthClientDetails oauthClientDetails) {
         oauthClientDetails = oauthClientDetailsService.updateOauthClientDetail(oauthClientDetails);
-        return RestStatusUtil.success(oauthClientDetails, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(oauthClientDetails);
     }
 
     @DeleteMapping
     public RestStatus<String> delOauthClientDetail(String... clientId) {
         List<String> clientIdList = Arrays.asList(clientId);
         oauthClientDetailsService.removeByIds(clientIdList);
-        return RestStatusUtil.success();
+        return RestStatus.success();
     }
 
 

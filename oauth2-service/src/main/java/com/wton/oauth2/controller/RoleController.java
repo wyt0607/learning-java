@@ -9,7 +9,6 @@ import com.wton.oauth2.dto.RoleDTO;
 import com.wton.oauth2.entity.Role;
 import com.wton.oauth2.entity.RoleResource;
 import com.wton.oauth2.extend.RestStatus;
-import com.wton.oauth2.extend.RestStatusUtil;
 import com.wton.oauth2.service.IRoleResourceService;
 import com.wton.oauth2.service.IRoleService;
 import org.springframework.web.bind.annotation.*;
@@ -44,29 +43,29 @@ public class RoleController extends AbstractBaseController {
     public RestStatus<PageDTO<Role>> getRole(RoleDTO roleDTO) {
         Role role = extractParams(roleDTO, Role.class);
         QueryWrapper<Role> queryWrapper = Wrappers.query(role);
-        Page<Role> rolePage = roleService.page(getPage(roleDTO), queryWrapper);
-        return RestStatusUtil.success(getPageDTO(rolePage), RestStatusUtil.SUCCESS_DES);
+        Page<Role> rolePage = roleService.page(convertToPage(roleDTO), queryWrapper);
+        return RestStatus.success(convertToPageDTO(rolePage));
     }
 
     @PostMapping
     public RestStatus<Role> addRole(RoleDTO roleDTO) {
         Role role = extractParams(roleDTO, Role.class);
         role = roleService.addRole(role);
-        return RestStatusUtil.success(role, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(role);
     }
 
     @PutMapping
     public RestStatus<Role> updateRole(RoleDTO roleDTO) {
         Role role = extractParams(roleDTO, Role.class);
         role = roleService.updateRole(role);
-        return RestStatusUtil.success(role, RestStatusUtil.SUCCESS_DES);
+        return RestStatus.success(role);
     }
 
     @DeleteMapping
     public RestStatus<String> delRole(String... id) {
         List<String> idList = Arrays.asList(id);
         roleService.removeByIds(idList);
-        return RestStatusUtil.success();
+        return RestStatus.success();
     }
 
 
@@ -74,7 +73,7 @@ public class RoleController extends AbstractBaseController {
     public RestStatus<String> addRoleResource(String roleId, String... resourceId) {
         List<RoleResource> roleResourceList = Stream.of(resourceId).map(temp -> new RoleResource(roleId, temp)).collect(Collectors.toList());
         roleResourceService.saveBatch(roleResourceList);
-        return RestStatusUtil.success();
+        return RestStatus.success();
     }
 
     @DeleteMapping("/resource")
@@ -85,7 +84,7 @@ public class RoleController extends AbstractBaseController {
             queryWrapper.in("resource_id", resourceId);
         }
         roleResourceService.remove(queryWrapper);
-        return RestStatusUtil.success();
+        return RestStatus.success();
     }
 
 }
